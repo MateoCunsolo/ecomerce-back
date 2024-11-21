@@ -13,9 +13,23 @@ const Producto = {
       por eso a nosotros solo nos interesa el primer elemento y lo desestructuramos en la variable result 
       poniendo corchetes al lado de la variable.
     */
-    const [result] = await db.query('SELECT * FROM productos');
+    const [result] = await db.query('SELECT * FROM producto');
+    return result;
+  },
+  
+  getOne: async (id) => {
+    const [result] = await db.query('SELECT * FROM producto WHERE id = ?', [id]);
+    return result;
+  },
+
+  getByCategory: async (categoria) => {
+    const [result] = await db.query('SELECT * FROM producto WHERE idCategoria = ?', [categoria]);
     return result;
   }
+
+
+
+
 };
 
 module.exports = Producto;
