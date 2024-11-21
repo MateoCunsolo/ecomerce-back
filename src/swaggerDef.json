@@ -213,102 +213,575 @@
     "/productos": {
       "get": {
         "summary": "Obtener todos los productos",
-        "operationId": "getProductos",
-        "tags": [
-          "Productos"
-        ],
+        "tags": ["Productos"],
         "responses": {
           "200": {
-            "description": "Lista de productos obtenida correctamente",
+            "description": "Lista de productos obtenida exitosamente",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Producto"
-                  }
+                  "items": { "$ref": "#/components/schemas/Producto" }
                 }
               }
             }
           },
-          "500": {
-            "description": "Error interno del servidor"
-          }
+          "500": { "description": "Error al obtener productos" }
         }
       }
     },
     "/productos/{id}": {
       "get": {
         "summary": "Obtener un producto por ID",
-        "operationId": "getProductoById",
-        "tags": [
-          "Productos"
-        ],
+        "tags": ["Productos"],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "ID del producto",
-            "schema": {
-              "type": "integer"
-            }
+            "schema": { "type": "integer", "example": 1 },
+            "description": "ID del producto"
           }
         ],
         "responses": {
           "200": {
-            "description": "Producto encontrado",
+            "description": "Detalles del producto",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Producto"
-                }
+                "schema": { "$ref": "#/components/schemas/Producto" }
               }
             }
           },
-          "404": {
-            "description": "Producto no encontrado"
-          },
-          "500": {
-            "description": "Error interno del servidor"
-          }
+          "404": { "description": "Producto no encontrado" },
+          "500": { "description": "Error interno del servidor" }
         }
       }
     },
     "/productos/categoria/{categoria}": {
       "get": {
         "summary": "Obtener productos por categoría",
-        "operationId": "getProductosByCategory",
-        "tags": [
-          "Productos"
-        ],
+        "tags": ["Productos"],
         "parameters": [
           {
             "name": "categoria",
             "in": "path",
             "required": true,
-            "description": "Categoría del producto",
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "integer", "example": 2 },
+            "description": "ID de la categoría"
           }
         ],
         "responses": {
           "200": {
-            "description": "Lista de productos por categoría",
+            "description": "Lista de productos filtrada por categoría",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Producto"
+                  "items": { "$ref": "#/components/schemas/Producto" }
+                }
+              }
+            }
+          },
+          "404": { "description": "Categoría no encontrada o sin productos" },
+          "500": { "description": "Error interno del servidor" }
+        }
+      }
+    },
+    "/productos/create": {
+      "post": {
+        "summary": "Crear un nuevo producto",
+        "tags": ["Productos"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Producto"
+              },
+              "examples": {
+                "ejemploProducto": {
+                  "value": {
+                    "nombre": "Nuevo producto",
+                    "descripcion": "Descripción del nuevo producto",
+                    "precio": 29.99,
+                    "stock": 50,
+                    "imagen_url": "https://example.com/imagen.jpg",
+                    "id_categoria": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Producto creado exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 101
+                    },
+                    "nombre": {
+                      "type": "string",
+                      "example": "Nuevo producto"
+                    },
+                    "descripcion": {
+                      "type": "string",
+                      "example": "Descripción del nuevo producto"
+                    },
+                    "precio": {
+                      "type": "number",
+                      "example": 29.99
+                    },
+                    "stock": {
+                      "type": "integer",
+                      "example": 50
+                    },
+                    "imagen_url": {
+                      "type": "string",
+                      "example": "https://example.com/imagen.jpg"
+                    },
+                    "id_categoria": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud inválida, datos incompletos o incorrectos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "El campo 'nombre' es obligatorio"
+                    }
                   }
                 }
               }
             }
           },
           "500": {
-            "description": "Error interno del servidor"
+            "description": "Error interno del servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Error al crear producto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productos/update/{id}": {
+      "put": {
+        "summary": "Actualizar un producto",
+        "tags": ["Productos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "description": "ID único del producto a actualizar"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Producto"
+              },
+              "examples": {
+                "ejemploProducto": {
+                  "value": {
+                    "nombre": "Producto actualizado",
+                    "descripcion": "Descripción detallada del producto actualizado",
+                    "precio": 19.99,
+                    "stock": 100,
+                    "imagen_url": "https://example.com/imagen.jpg",
+                    "id_categoria": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Producto actualizado exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "mensaje": {
+                      "type": "string",
+                      "example": "Producto actualizado correctamente"
+                    },
+                    "producto": {
+                      "$ref": "#/components/schemas/Producto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud inválida, datos incompletos o incorrectos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "El campo 'nombre' es obligatorio"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Producto no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No se encontró un producto con el ID proporcionado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Error al actualizar el producto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productos/update/stock/{id}": {
+      "put": {
+        "summary": "Actualizar el stock de un producto",
+        "tags": ["Productos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "example": 1 },
+            "description": "ID del producto"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "stock": { "type": "integer", "example": 50 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Stock actualizado exitosamente" },
+          "400": { "description": "El stock debe ser mayor o igual a 0" },
+          "500": { "description": "Error al actualizar el stock" }
+        }
+      }
+    },
+    "/productos/update/precio/{id}": {
+      "put": {
+        "summary": "Actualizar el precio de un producto",
+        "tags": ["Productos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "example": 1 },
+            "description": "ID del producto"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "price": { "type": "number", "example": 19.99 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Precio actualizado exitosamente" },
+          "400": { "description": "El precio debe ser mayor o igual a 0" },
+          "500": { "description": "Error al actualizar el precio" }
+        }
+      }
+    },
+    "/productos/update/descripcion/{id}": {
+      "put": {
+        "summary": "Actualizar la descripción de un producto",
+        "tags": ["Productos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "example": 1 },
+            "description": "ID del producto"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "example": "Nueva descripción del producto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Descripción actualizada exitosamente" },
+          "500": { "description": "Error al actualizar la descripción" }
+        }
+      }
+    },
+    "/productos/update/nombre/{id}": {
+      "put": {
+        "summary": "Actualizar el nombre de un producto",
+        "tags": ["Productos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "example": 1 },
+            "description": "ID del producto"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "example": "Nuevo nombre" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Nombre actualizado exitosamente" },
+          "500": { "description": "Error al actualizar el nombre" }
+        }
+      }
+    },
+    "/productos/update/imagen/{id}": {
+      "put": {
+        "summary": "Actualizar la imagen de un producto",
+        "tags": ["Productos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "example": 1 },
+            "description": "ID del producto"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "img": {
+                    "type": "string",
+                    "example": "https://example.com/nueva-imagen.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Imagen actualizada exitosamente" },
+          "500": { "description": "Error al actualizar la imagen" }
+        }
+      }
+    },
+    "/productos/update/categoria/{id}": {
+      "put": {
+        "summary": "Actualizar la categoría de un producto",
+        "tags": ["Productos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "example": 1 },
+            "description": "ID del producto"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": { "type": "integer", "example": 2 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Categoría actualizada exitosamente" },
+          "500": { "description": "Error al actualizar la categoría" }
+        }
+      }
+    },
+    "/productos/delete/{id}": {
+      "delete": {
+        "summary": "Eliminar un producto",
+        "tags": ["Productos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "description": "ID del producto a eliminar"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Producto eliminado con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Producto eliminado con éxito"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud inválida, el ID es inválido o está ausente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ID inválido"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se pudo encontrar el producto para eliminar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No se pudo eliminar el producto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Error al eliminar producto"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -337,7 +810,8 @@
           }
         }
       }
-    }, "/compra": {
+    }, 
+    "/compra": {
       "post": {
         "summary": "Crear una compra",
         "operationId": "crearCompra",

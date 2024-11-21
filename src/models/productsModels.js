@@ -2,21 +2,10 @@ const db = require('../../database/db');
 
 const Producto = {
   getAll: async () => {
-    /* 
-      desestructuración de arreglos  ==>  const [result] = await db.query('SELECT * FROM productos');
-      sino sería: const result = await db.query('SELECT * FROM productos'); 
-      nos ahorramos la variable result y accedemos directamente al primer elemento del arreglo que nos devuelve db.query,
-      utilizando [result] = await db.query('SELECT * FROM productos'); 
-      db.query devuelve un arreglo de dos elementos, 
-      el primero es el resultado de la consulta, 
-      el segundo es la información de los campos que se obtuvieron en la consulta, 
-      por eso a nosotros solo nos interesa el primer elemento y lo desestructuramos en la variable result 
-      poniendo corchetes al lado de la variable.
-    */
     const [result] = await db.query('SELECT * FROM producto');
     return result;
   },
-  
+
   getOne: async (id) => {
     const [result] = await db.query('SELECT * FROM producto WHERE id = ?', [id]);
     return result;
@@ -25,10 +14,66 @@ const Producto = {
   getByCategory: async (categoria) => {
     const [result] = await db.query('SELECT * FROM producto WHERE id_categoria = ?', [categoria]);
     return result;
+  },
+
+  updateStock: async (id, stock) => {
+    if (stock >= 0) {
+      const [result] = await db.query('UPDATE producto SET stock = ? WHERE id = ?', [stock, id]);
+      return result;
+    } else {
+      return { error: 'El stock debe ser mayor o igual a 0' };
+    }
+  },
+
+  updatePrice: async (id, price) => {
+    if (price >= 0) {
+      const [result] = await db.query('UPDATE producto SET precio = ? WHERE id = ?', [price, id]);
+      return result;
+    } else {
+      return { error: 'El precio debe ser mayor o igual a 0' };
+    }
+  },
+
+  updateDescription: async (id, description) => {
+    const [result] = await db.query('UPDATE producto SET descripcion = ? WHERE id = ?', [description, id]);
+    return result;
+  },
+
+  updateName: async (id, name) => {
+    const [result] = await db.query('UPDATE producto SET nombre = ? WHERE id = ?', [name, id]);
+    return result;
+  },
+
+  updateImg: async (id, img) => {
+    const [result] = await db.query('UPDATE producto SET imagen_url = ? WHERE id = ?', [img, id]);
+    return result;
+  },
+
+  updateCategory: async (id, category) => {
+    const [result] = await db.query('UPDATE producto SET id_categoria = ? WHERE id = ?', [category, id]);
+    return result;
+  },
+
+  updateProduct: async (id, product) => {
+    const [result] = await db.query('UPDATE producto SET nombre = ?, descripcion = ?, precio = ?, stock = ?, imagen_url = ?, id_categoria = ? WHERE id = ?', [product.nombre, product.descripcion, product.precio, product.stock, product.imagen_url, product.id_categoria, id]);
+    return result;
+  },
+
+  createProduct: async (product) => {
+    const [result] = await db.query('INSERT INTO producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) VALUES (?, ?, ?, ?, ?, ?)', [product.nombre, product.descripcion, product.precio, product.stock, product.imagen_url, product.id_categoria]);
+    if (result.affectedRows) {
+      return { message: 'Producto creado con éxito', id: result.insertId };  
+    }
+    return { error: 'No se pudo crear el producto' };
+  },
+
+  deleteProduct: async (id) => {
+    const [result] = await db.query('DELETE FROM producto WHERE id = ?', [id]);
+    if (result.affectedRows) {
+      return { message: 'Producto eliminado con éxito' };
+    }
+    return { error: 'No existe ese producto' };
   }
-
-
-
 
 };
 

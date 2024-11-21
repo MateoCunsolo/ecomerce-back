@@ -1,5 +1,21 @@
 const productoModel = require('../models/productsModels');
 
+
+//CREAR PRODUCTO
+const createProducto = async (req, res) => {
+  try{
+    const producto = req.body;
+    const result = await productoModel.createProduct(producto);
+    res.status(200).json(result);
+  }catch(error){
+    console.error('Error al crear producto:', error.message);
+    res.status(500).json({ error: 'Error al crear producto' });
+  }
+};
+
+
+
+//OBTENER PRODUCTOS
 const getProductos = async (req, res) => {
   try {
     const productos = await productoModel.getAll(); 
@@ -34,8 +50,117 @@ const getProductosByCategory = async (req, res) => {
 };
 
 
+
+//ACTUALIZAR PRODUCTO
+const updateProductoStockById = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const stock = req.body.stock;
+    const result = await productoModel.updateStock(id, stock);
+    res.status(200).json(result);
+  }catch(error){
+    console.error('Error al actualizar producto:', error.message);
+    res.status(500).json({ error: 'Error al actualizar producto' });
+  }
+}
+
+const updateProductoPriceById = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const price = req.body.price;
+    const result = await productoModel.updatePrice(id, price);
+    res.status(200).json(result);
+  }catch(error){
+    console.error('Error al actualizar producto:', error.message);
+    res.status(500).json({ error: 'Error al actualizar producto' });
+  }
+}
+
+const updateProductoDescriptionById = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const description = req.body.description;
+    const result = await productoModel.updateDescription(id, description);
+    res.status(200).json(result);
+  }catch(error){
+    console.error('Error al actualizar producto:', error.message);
+    res.status(500).json({ error: 'Error al actualizar producto' });
+  }
+};
+
+const updateProductoNameById = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const name = req.body.name;
+    const result = await productoModel.updateName(id, name);
+    res.status(200).json(result);
+  }catch(error){
+    console.error('Error al actualizar producto:', error.message);
+    res.status(500).json({ error: 'Error al actualizar producto' });
+  }  
+};
+
+const updateProductoImgById = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const img = req.body.img;
+    const result = await productoModel.updateImg(id, img);
+    res.status(200).json(result);
+  }catch(error){
+    console.error('Error al actualizar producto:', error.message);
+    res.status(500).json({ error: 'Error al actualizar producto' });
+  }
+};
+
+const updateProductoCategoryById = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const category = req.body.category;
+    const result = await productoModel.updateCategory(id, category);
+    res.status(200).json(result);
+  }catch(error){
+    console.error('Error al actualizar producto:', error.message);
+    res.status(500).json({ error: 'Error al actualizar producto' });
+  }
+};
+
+const updateProductoById = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const product = req.body;
+    const result = await productoModel.updateProduct(id, product);
+    res.status(200).json(result);
+  }catch(error){
+    console.error('Error al actualizar producto:', error.message);
+    res.status(500).json({ error: 'Error al actualizar producto' });
+  }
+};
+
+
+//ELIMINAR
+const deleteProductoById = async (req, res) => {
+  try{
+    const {id} = req.params;
+    const result = await productoModel.deleteProduct(id);
+    res.status(200).json(result);
+  }catch(error){
+    console.error('Error al eliminar producto:', error.message);
+    res.status(500).json({ error: 'Error al eliminar producto' });
+  }
+};
+
+
 module.exports = {
   getProductos,
   getProductoById,
-  getProductosByCategory
+  getProductosByCategory,
+  updateProductoStockById,
+  updateProductoPriceById,
+  updateProductoDescriptionById,
+  updateProductoNameById,
+  updateProductoImgById,
+  updateProductoCategoryById,
+  updateProductoById,
+  createProducto,
+  deleteProductoById
 };
