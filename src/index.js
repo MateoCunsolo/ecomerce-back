@@ -1,49 +1,30 @@
 const express = require('express');
 const productosRoutes = require('./routes/productsRoutes');
-const usuariosRoutes = require('./routes/usuarioRoutes');
-const categoriasRoutes = require('./routes/categoriaRoutes');
-const tiposUsuariosRoutes = require('./routes//tipoUsuarioRoutes');
-
+const authRoutes = require('./routes/authRoutes'); 
+const categoriasRoutes = require('./routes/categoriaRoutes'); 
+const tipoUsuarioRoutes = require('./routes/tipoUsuarioRoutes');
+const compraRoutes = require('./routes/compraRoutes');
 const app = express();
 
-// ---------------------------- Middlewares ---------------------------- //
 app.use(express.json());
 
-// ---------------------------- Rutas ---------------------------- //
-
-// Ruta inicial
-app.get('/', (req, res) => {
-  res.status(200).send('Bienvenido a la API de un e-commerce deportivo');
-});
-
-// Rutas de productos
+// rutas
+app.get('/', (req, res) => {res.status(200).send('Bienvenido a la API de un e-commerce deportivo');});
 app.use('/productos', productosRoutes);
-
-// Rutas de usuarios
-app.use('/usuarios', usuariosRoutes);
-
-// Rutas de categorías
+app.use('/tipo-usuario', tipoUsuarioRoutes);
 app.use('/categorias', categoriasRoutes);
+app.use('/compra', compraRoutes);
+app.use('/auth', authRoutes); 
 
-// Rutas de tipos de usuarios
-app.use('/tipos-usuarios', tiposUsuariosRoutes);
+// ruta no encontrada
+app.use((req, res, next) => {res.status(404).json({ error: 'Ruta no encontrada' });});
 
-// ---------------------------- Manejo de errores ---------------------------- //
 
-// Ruta no encontrada
-app.use((req, res, next) => {
-  res.status(404).json({ error: 'Ruta no encontrada' });
+
+app.listen(3000, () => {
+  console.log('Servidor iniciado en http://localhost:3000');
 });
-
-// Middleware para manejar errores generales
 app.use((err, req, res, next) => {
   console.error('Error interno:', err.message);
   res.status(500).json({ error: 'Error interno del servidor' });
-});
-
-// ---------------------------- Inicio del servidor ---------------------------- //
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

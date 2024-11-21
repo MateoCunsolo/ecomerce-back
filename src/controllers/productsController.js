@@ -3,6 +3,7 @@ const productoModel = require('../models/productsModels');
 const getProductos = async (req, res) => {
   try {
     const productos = await productoModel.getAll(); 
+    console.log("Productos obtenidos:", productos.length);
     res.status(200).json(productos); 
   } catch (error) {
     console.error('Error al obtener productos:', error.message);
