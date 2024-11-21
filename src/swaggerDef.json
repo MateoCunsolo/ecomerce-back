@@ -1,0 +1,631 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "E-commerce API",
+    "description": "API para un e-commerce deportivo con funcionalidades de autenticación, productos, compras, y más.",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Operaciones de autenticación y gestión de usuarios."
+    },
+    {
+      "name": "Productos",
+      "description": "Operaciones relacionadas con productos."
+    },
+    {
+      "name": "Categorías",
+      "description": "Operaciones relacionadas con las categorías de productos."
+    },
+    {
+      "name": "Compras",
+      "description": "Operaciones relacionadas con compras."
+    },
+    {
+      "name": "Tipos de Usuario",
+      "description": "Operaciones relacionadas con los tipos de usuarios."
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Iniciar sesión",
+        "description": "Permite a un usuario autenticarse y obtener un token de acceso.",
+        "operationId": "login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "correo_electronico": {
+                    "type": "string",
+                    "example": "usuario@ejemplo.com"
+                  },
+                  "contrasena": {
+                    "type": "string",
+                    "example": "password123"
+                  }
+                },
+                "required": [
+                  "correo_electronico",
+                  "contrasena"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inicio de sesión exitoso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "LOGIN EXITOSO"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "nombre": {
+                      "type": "string",
+                      "example": "Juan"
+                    },
+                    "apellido": {
+                      "type": "string",
+                      "example": "Pérez"
+                    },
+                    "correo_electronico": {
+                      "type": "string",
+                      "example": "usuario@ejemplo.com"
+                    },
+                    "tipo_usuario": {
+                      "type": "string",
+                      "example": "cliente"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwi...2vVGOM4UwLjkD5LLE8ldDQ"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          },
+          "401": {
+            "description": "Contraseña incorrecta"
+          },
+          "500": {
+            "description": "Error al autenticar"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Registrar usuario",
+        "description": "Permite registrar un nuevo usuario y obtener un token de acceso.",
+        "operationId": "register",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Juan"
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "example": "Pérez"
+                  },
+                  "correo_electronico": {
+                    "type": "string",
+                    "example": "usuario@ejemplo.com"
+                  },
+                  "contrasena": {
+                    "type": "string",
+                    "example": "password123"
+                  },
+                  "id_tipo_usuario": {
+                    "type": "integer",
+                    "example": 2
+                  }
+                },
+                "required": [
+                  "nombre",
+                  "apellido",
+                  "correo_electronico",
+                  "contrasena",
+                  "id_tipo_usuario"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuario registrado exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "REGISTRO EXITOSO"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "nombre": {
+                      "type": "string",
+                      "example": "Juan"
+                    },
+                    "apellido": {
+                      "type": "string",
+                      "example": "Pérez"
+                    },
+                    "correo_electronico": {
+                      "type": "string",
+                      "example": "usuario@ejemplo.com"
+                    },
+                    "tipo_usuario": {
+                      "type": "string",
+                      "example": "cliente"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwi...2vVGOM4UwLjkD5LLE8ldDQ"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Faltan parámetros necesarios o correo ya en uso"
+          },
+          "500": {
+            "description": "Error al registrar"
+          }
+        }
+      }
+    },
+    "/productos": {
+      "get": {
+        "summary": "Obtener todos los productos",
+        "operationId": "getProductos",
+        "tags": [
+          "Productos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de productos obtenida correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Producto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/productos/{id}": {
+      "get": {
+        "summary": "Obtener un producto por ID",
+        "operationId": "getProductoById",
+        "tags": [
+          "Productos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID del producto",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Producto encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Producto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Producto no encontrado"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/productos/categoria/{categoria}": {
+      "get": {
+        "summary": "Obtener productos por categoría",
+        "operationId": "getProductosByCategory",
+        "tags": [
+          "Productos"
+        ],
+        "parameters": [
+          {
+            "name": "categoria",
+            "in": "path",
+            "required": true,
+            "description": "Categoría del producto",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de productos por categoría",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Producto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/categorias": {
+      "get": {
+        "summary": "Obtener todas las categorías",
+        "operationId": "getCategorias",
+        "tags": ["Categorías"],
+        "responses": {
+          "200": {
+            "description": "Lista de categorías obtenida correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Categoria"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    }, "/compra": {
+      "post": {
+        "summary": "Crear una compra",
+        "operationId": "crearCompra",
+        "tags": ["Compras"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Compra"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Compra registrada exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "compraId": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Faltan datos obligatorios"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/compra/{id}": {
+      "get": {
+        "summary": "Obtener una compra por ID",
+        "operationId": "obtenerCompraPorId",
+        "tags": ["Compras"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Compra obtenida correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompraDetalle"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Compra no encontrada"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/compra/cliente/{id}": {
+      "get": {
+        "summary": "Obtener todas las compras de un cliente",
+        "operationId": "obtenerComprasPorCliente",
+        "tags": ["Compras"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Compras obtenidas correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompraDetalle"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontraron compras para este cliente"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+  "/tipos-usuarios": {
+      "get": {
+        "summary": "Obtener todos los tipos de usuarios",
+        "operationId": "getTiposUsuarios",
+        "tags": ["Tipos de Usuario"],
+        "responses": {
+          "200": {
+            "description": "Tipos de usuarios obtenidos correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoUsuario"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Producto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID del producto"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del producto"
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripción del producto"
+          },
+          "precio": {
+            "type": "number",
+            "format": "float",
+            "description": "Precio del producto"
+          },
+          "idCategoria": {
+            "type": "integer",
+            "description": "ID de la categoría del producto"
+          }
+        },
+        "required": [
+          "id",
+          "nombre",
+          "precio"
+        ]
+      },
+      "Categoria": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID de la categoría"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre de la categoría"
+          }
+        },
+        "required": ["id", "nombre"]
+      },
+      "Compra": {
+        "type": "object",
+        "properties": {
+          "id_usuario": {
+            "type": "integer",
+            "description": "ID del usuario que realiza la compra"
+          },
+          "productos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductoCompra"
+            },
+            "description": "Lista de productos comprados"
+          },
+          "monto_total": {
+            "type": "number",
+            "format": "float",
+            "description": "Monto total de la compra"
+          }
+        },
+        "required": ["id_usuario", "productos", "monto_total"]
+      },
+      "ProductoCompra": {
+        "type": "object",
+        "properties": {
+          "id_producto": {
+            "type": "integer",
+            "description": "ID del producto"
+          },
+          "cantidad": {
+            "type": "integer",
+            "description": "Cantidad del producto comprado"
+          }
+        },
+        "required": ["id_producto", "cantidad"]
+      },
+      "CompraDetalle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID de la compra"
+          },
+          "id_usuario": {
+            "type": "integer",
+            "description": "ID del usuario que realizó la compra"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Fecha de la compra"
+          },
+          "monto_total": {
+            "type": "number",
+            "format": "float",
+            "description": "Monto total de la compra"
+          },
+          "productos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductoCompraDetalle"
+            },
+            "description": "Productos comprados"
+          }
+        },
+        "required": ["id", "id_usuario", "fecha", "monto_total", "productos"]
+      },
+      "ProductoCompraDetalle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID del producto"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del producto"
+          },
+          "precio": {
+            "type": "number",
+            "format": "float",
+            "description": "Precio del producto"
+          },
+          "cantidad": {
+            "type": "integer",
+            "description": "Cantidad comprada"
+          }
+        },
+        "required": ["id", "nombre", "precio", "cantidad"]
+      },
+      "TipoUsuario": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID del tipo de usuario"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del tipo de usuario"
+          }
+        },
+        "required": ["id", "nombre"]
+      }
+    }
+  }
+}

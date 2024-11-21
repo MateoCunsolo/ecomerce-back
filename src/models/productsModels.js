@@ -23,7 +23,7 @@ const Producto = {
   },
 
   getByCategory: async (categoria) => {
-    const [result] = await db.query('SELECT * FROM producto WHERE idCategoria = ?', [categoria]);
+    const [result] = await db.query('SELECT * FROM producto WHERE id_categoria = ?', [categoria]);
     return result;
   }
 
