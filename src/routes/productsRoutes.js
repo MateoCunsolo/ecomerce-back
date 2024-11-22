@@ -1,10 +1,11 @@
 const express = require('express');
 const productosController = require('../controllers/productsController');
 const router = express.Router();
+const authGuard = require('../middlewares/authGuard'); // Importa el guard
 
 
 //CREAR
-router.post('/create', productosController.createProducto);
+router.post('/create', authGuard,productosController.createProducto);
 
 //OBETENER
 router.get('/', productosController.getProductos);
@@ -12,16 +13,16 @@ router.get('/:id', productosController.getProductoById);
 router.get('/categoria/:categoria', productosController.getProductosByCategory);
 
 //ACTUALIZAR
-router.put('/update/stock/:id', productosController.updateProductoStockById);
-router.put('/update/precio/:id', productosController.updateProductoPriceById);
-router.put('/update/descripcion/:id', productosController.updateProductoDescriptionById);
-router.put('/update/nombre/:id', productosController.updateProductoNameById);
-router.put('/update/imagen/:id', productosController.updateProductoImgById);
-router.put('/update/categoria/:id', productosController.updateProductoCategoryById);
-router.put('/update/:id', productosController.updateProductoById);
+router.put('/update/stock/:id', authGuard, productosController.updateProductoStockById, );
+router.put('/update/precio/:id', authGuard, productosController.updateProductoPriceById);
+router.put('/update/descripcion/:id', authGuard, productosController.updateProductoDescriptionById);
+router.put('/update/nombre/:id', authGuard, productosController.updateProductoNameById);
+router.put('/update/imagen/:id', authGuard, productosController.updateProductoImgById);
+router.put('/update/categoria/:id', authGuard, productosController.updateProductoCategoryById);
+router.put('/update/:id', authGuard, productosController.updateProductoById);
 
 //ELIMINAR
-router.delete('/delete/:id', productosController.deleteProductoById);
+router.delete('/delete/:id', authGuard, productosController.deleteProductoById);
 
 
 module.exports = router;

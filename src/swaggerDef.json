@@ -45,7 +45,7 @@
                 "properties": {
                   "correo_electronico": {
                     "type": "string",
-                    "example": "usuario@ejemplo.com"
+                    "example": "ADMIN@GMAIL.COM"
                   },
                   "contrasena": {
                     "type": "string",
@@ -213,7 +213,9 @@
     "/productos": {
       "get": {
         "summary": "Obtener todos los productos",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "responses": {
           "200": {
             "description": "Lista de productos obtenida exitosamente",
@@ -221,25 +223,34 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Producto" }
+                  "items": {
+                    "$ref": "#/components/schemas/Producto"
+                  }
                 }
               }
             }
           },
-          "500": { "description": "Error al obtener productos" }
+          "500": {
+            "description": "Error al obtener productos"
+          }
         }
       }
     },
     "/productos/{id}": {
       "get": {
         "summary": "Obtener un producto por ID",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "example": 1 },
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
             "description": "ID del producto"
           }
         ],
@@ -248,25 +259,36 @@
             "description": "Detalles del producto",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Producto" }
+                "schema": {
+                  "$ref": "#/components/schemas/Producto"
+                }
               }
             }
           },
-          "404": { "description": "Producto no encontrado" },
-          "500": { "description": "Error interno del servidor" }
+          "404": {
+            "description": "Producto no encontrado"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
         }
       }
     },
     "/productos/categoria/{categoria}": {
       "get": {
         "summary": "Obtener productos por categoría",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "categoria",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "example": 2 },
+            "schema": {
+              "type": "integer",
+              "example": 2
+            },
             "description": "ID de la categoría"
           }
         ],
@@ -277,20 +299,28 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Producto" }
+                  "items": {
+                    "$ref": "#/components/schemas/Producto"
+                  }
                 }
               }
             }
           },
-          "404": { "description": "Categoría no encontrada o sin productos" },
-          "500": { "description": "Error interno del servidor" }
+          "404": {
+            "description": "Categoría no encontrada o sin productos"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
         }
       }
     },
     "/productos/create": {
       "post": {
         "summary": "Crear un nuevo producto",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -392,7 +422,9 @@
     "/productos/update/{id}": {
       "put": {
         "summary": "Actualizar un producto",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -505,13 +537,18 @@
     "/productos/update/stock/{id}": {
       "put": {
         "summary": "Actualizar el stock de un producto",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "example": 1 },
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
             "description": "ID del producto"
           }
         ],
@@ -522,29 +559,43 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "stock": { "type": "integer", "example": 50 }
+                  "stock": {
+                    "type": "integer",
+                    "example": 50
+                  }
                 }
               }
             }
           }
         },
         "responses": {
-          "200": { "description": "Stock actualizado exitosamente" },
-          "400": { "description": "El stock debe ser mayor o igual a 0" },
-          "500": { "description": "Error al actualizar el stock" }
+          "200": {
+            "description": "Stock actualizado exitosamente"
+          },
+          "400": {
+            "description": "El stock debe ser mayor o igual a 0"
+          },
+          "500": {
+            "description": "Error al actualizar el stock"
+          }
         }
       }
     },
     "/productos/update/precio/{id}": {
       "put": {
         "summary": "Actualizar el precio de un producto",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "example": 1 },
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
             "description": "ID del producto"
           }
         ],
@@ -555,29 +606,43 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "price": { "type": "number", "example": 19.99 }
+                  "price": {
+                    "type": "number",
+                    "example": 19.99
+                  }
                 }
               }
             }
           }
         },
         "responses": {
-          "200": { "description": "Precio actualizado exitosamente" },
-          "400": { "description": "El precio debe ser mayor o igual a 0" },
-          "500": { "description": "Error al actualizar el precio" }
+          "200": {
+            "description": "Precio actualizado exitosamente"
+          },
+          "400": {
+            "description": "El precio debe ser mayor o igual a 0"
+          },
+          "500": {
+            "description": "Error al actualizar el precio"
+          }
         }
       }
     },
     "/productos/update/descripcion/{id}": {
       "put": {
         "summary": "Actualizar la descripción de un producto",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "example": 1 },
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
             "description": "ID del producto"
           }
         ],
@@ -598,21 +663,30 @@
           }
         },
         "responses": {
-          "200": { "description": "Descripción actualizada exitosamente" },
-          "500": { "description": "Error al actualizar la descripción" }
+          "200": {
+            "description": "Descripción actualizada exitosamente"
+          },
+          "500": {
+            "description": "Error al actualizar la descripción"
+          }
         }
       }
     },
     "/productos/update/nombre/{id}": {
       "put": {
         "summary": "Actualizar el nombre de un producto",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "example": 1 },
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
             "description": "ID del producto"
           }
         ],
@@ -623,28 +697,40 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": { "type": "string", "example": "Nuevo nombre" }
+                  "name": {
+                    "type": "string",
+                    "example": "Nuevo nombre"
+                  }
                 }
               }
             }
           }
         },
         "responses": {
-          "200": { "description": "Nombre actualizado exitosamente" },
-          "500": { "description": "Error al actualizar el nombre" }
+          "200": {
+            "description": "Nombre actualizado exitosamente"
+          },
+          "500": {
+            "description": "Error al actualizar el nombre"
+          }
         }
       }
     },
     "/productos/update/imagen/{id}": {
       "put": {
         "summary": "Actualizar la imagen de un producto",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "example": 1 },
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
             "description": "ID del producto"
           }
         ],
@@ -665,21 +751,30 @@
           }
         },
         "responses": {
-          "200": { "description": "Imagen actualizada exitosamente" },
-          "500": { "description": "Error al actualizar la imagen" }
+          "200": {
+            "description": "Imagen actualizada exitosamente"
+          },
+          "500": {
+            "description": "Error al actualizar la imagen"
+          }
         }
       }
     },
     "/productos/update/categoria/{id}": {
       "put": {
         "summary": "Actualizar la categoría de un producto",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "example": 1 },
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
             "description": "ID del producto"
           }
         ],
@@ -690,22 +785,31 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "category": { "type": "integer", "example": 2 }
+                  "category": {
+                    "type": "integer",
+                    "example": 2
+                  }
                 }
               }
             }
           }
         },
         "responses": {
-          "200": { "description": "Categoría actualizada exitosamente" },
-          "500": { "description": "Error al actualizar la categoría" }
+          "200": {
+            "description": "Categoría actualizada exitosamente"
+          },
+          "500": {
+            "description": "Error al actualizar la categoría"
+          }
         }
       }
     },
     "/productos/delete/{id}": {
       "delete": {
         "summary": "Eliminar un producto",
-        "tags": ["Productos"],
+        "tags": [
+          "Productos"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -790,7 +894,9 @@
       "get": {
         "summary": "Obtener todas las categorías",
         "operationId": "getCategorias",
-        "tags": ["Categorías"],
+        "tags": [
+          "Categorías"
+        ],
         "responses": {
           "200": {
             "description": "Lista de categorías obtenida correctamente",
@@ -810,12 +916,14 @@
           }
         }
       }
-    }, 
+    },
     "/compra": {
       "post": {
         "summary": "Crear una compra",
         "operationId": "crearCompra",
-        "tags": ["Compras"],
+        "tags": [
+          "Compras"
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -834,8 +942,12 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": { "type": "string" },
-                    "compraId": { "type": "integer" }
+                    "message": {
+                      "type": "string"
+                    },
+                    "compraId": {
+                      "type": "integer"
+                    }
                   }
                 }
               }
@@ -854,7 +966,9 @@
       "get": {
         "summary": "Obtener una compra por ID",
         "operationId": "obtenerCompraPorId",
-        "tags": ["Compras"],
+        "tags": [
+          "Compras"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -889,7 +1003,9 @@
       "get": {
         "summary": "Obtener todas las compras de un cliente",
         "operationId": "obtenerComprasPorCliente",
-        "tags": ["Compras"],
+        "tags": [
+          "Compras"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -923,11 +1039,13 @@
         }
       }
     },
-  "/tipos-usuarios": {
+    "/tipos-usuarios": {
       "get": {
         "summary": "Obtener todos los tipos de usuarios",
         "operationId": "getTiposUsuarios",
-        "tags": ["Tipos de Usuario"],
+        "tags": [
+          "Tipos de Usuario"
+        ],
         "responses": {
           "200": {
             "description": "Tipos de usuarios obtenidos correctamente",
@@ -994,7 +1112,10 @@
             "description": "Nombre de la categoría"
           }
         },
-        "required": ["id", "nombre"]
+        "required": [
+          "id",
+          "nombre"
+        ]
       },
       "Compra": {
         "type": "object",
@@ -1016,7 +1137,11 @@
             "description": "Monto total de la compra"
           }
         },
-        "required": ["id_usuario", "productos", "monto_total"]
+        "required": [
+          "id_usuario",
+          "productos",
+          "monto_total"
+        ]
       },
       "ProductoCompra": {
         "type": "object",
@@ -1030,7 +1155,10 @@
             "description": "Cantidad del producto comprado"
           }
         },
-        "required": ["id_producto", "cantidad"]
+        "required": [
+          "id_producto",
+          "cantidad"
+        ]
       },
       "CompraDetalle": {
         "type": "object",
@@ -1061,7 +1189,13 @@
             "description": "Productos comprados"
           }
         },
-        "required": ["id", "id_usuario", "fecha", "monto_total", "productos"]
+        "required": [
+          "id",
+          "id_usuario",
+          "fecha",
+          "monto_total",
+          "productos"
+        ]
       },
       "ProductoCompraDetalle": {
         "type": "object",
@@ -1084,7 +1218,12 @@
             "description": "Cantidad comprada"
           }
         },
-        "required": ["id", "nombre", "precio", "cantidad"]
+        "required": [
+          "id",
+          "nombre",
+          "precio",
+          "cantidad"
+        ]
       },
       "TipoUsuario": {
         "type": "object",
@@ -1098,8 +1237,23 @@
             "description": "Nombre del tipo de usuario"
           }
         },
-        "required": ["id", "nombre"]
+        "required": [
+          "id",
+          "nombre"
+        ]
       }
-    }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "security": [
+      {
+        "BearerAuth": []
+      }
+    ]
   }
 }
