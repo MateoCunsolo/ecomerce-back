@@ -321,6 +321,11 @@
         "tags": [
           "Productos"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -424,6 +429,11 @@
         "summary": "Actualizar un producto",
         "tags": [
           "Productos"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -540,6 +550,11 @@
         "tags": [
           "Productos"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -586,6 +601,11 @@
         "summary": "Actualizar el precio de un producto",
         "tags": [
           "Productos"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -634,6 +654,11 @@
         "tags": [
           "Productos"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -677,6 +702,11 @@
         "summary": "Actualizar el nombre de un producto",
         "tags": [
           "Productos"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -722,6 +752,11 @@
         "tags": [
           "Productos"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -766,6 +801,11 @@
         "tags": [
           "Productos"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -809,6 +849,11 @@
         "summary": "Eliminar un producto",
         "tags": [
           "Productos"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "parameters": [
           {
