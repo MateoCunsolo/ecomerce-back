@@ -795,6 +795,96 @@
         }
       }
     },
+    "/productos/update/all-imagenes": {
+      "put": {
+        "summary": "Actualizar imágenes de múltiples productos",
+        "description": "Actualiza la imagen de los productos en la base de datos a partir de un listado de productos con sus IDs e imágenes.",
+        "operationId": "updateALLIMG",
+        "tags": [
+          "Productos"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "El ID del producto a actualizar.",
+                      "example": 52
+                    },
+                    "imagen_url": {
+                      "type": "string",
+                      "description": "La nueva URL de la imagen del producto.",
+                      "example": "https://i.ibb.co/NyYnpBz/remera-adizero-running.jpg"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Las imágenes de los productos se han actualizado correctamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Imagenes actualizadas correctamente"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error en la actualización de uno o más productos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No se pudo actualizar el producto con ID: 52"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al intentar actualizar los productos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Error al actualizar productos"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/productos/update/categoria/{id}": {
       "put": {
         "summary": "Actualizar la categoría de un producto",

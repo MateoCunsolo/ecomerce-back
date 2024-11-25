@@ -45,6 +45,7 @@ const Producto = {
   },
 
   updateImg: async (id, img) => {
+    console.log(img);
     const [result] = await db.query('UPDATE PRODUCTO SET imagen_url = ? WHERE id = ?', [img, id]);
     return result;
   },

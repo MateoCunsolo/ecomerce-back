@@ -2,7 +2,7 @@ const express = require('express');
 const productosController = require('../controllers/productsController');
 const router = express.Router();
 const authGuard = require('../middlewares/authGuard'); // Importa el guard
-
+router.put('/update/all-imagenes',productosController.updateALLIMG);
 
 //CREAR
 router.post('/create', authGuard,productosController.createProducto);
@@ -20,7 +20,6 @@ router.put('/update/nombre/:id', authGuard, productosController.updateProductoNa
 router.put('/update/imagen/:id', authGuard, productosController.updateProductoImgById);
 router.put('/update/categoria/:id', authGuard, productosController.updateProductoCategoryById);
 router.put('/update/:id', authGuard, productosController.updateProductoById);
-
 //ELIMINAR
 router.delete('/delete/:id', authGuard, productosController.deleteProductoById);
 

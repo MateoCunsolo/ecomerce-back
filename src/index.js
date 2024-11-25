@@ -1,5 +1,6 @@
 const express = require('express');
-const path = require('path'); // Asegúrate de importar path
+const cors = require('cors');
+const path = require('path');
 const productosRoutes = require('./routes/productsRoutes');
 const authRoutes = require('./routes/authRoutes'); 
 const categoriasRoutes = require('./routes/categoriaRoutes'); 
@@ -8,13 +9,21 @@ const compraRoutes = require('./routes/compraRoutes');
 const swaggerUi = require('swagger-ui-express');
 const app = express();
 
-// Cargar el archivo de Swagger
+// Middleware para manejar cuerpos JSON
+app.use(express.json()); // Solo una vez es necesario
+
+// CORS
+app.use(cors({
+    origin: '*', // Puedes cambiar '*' por orígenes específicos si lo prefieres
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Cargar el archivo Swagger
 const swaggerDocument = require(path.join(__dirname, 'swaggerDef.json'));
 
 // Usar Swagger UI en la ruta '/api-docs'
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-app.use(express.json());
 
 // Rutas
 app.get('/', (req, res) => { 
