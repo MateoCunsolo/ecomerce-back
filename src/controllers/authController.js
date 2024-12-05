@@ -34,7 +34,7 @@ const login = async (req, res) => {
 
 
 const register = async (req, res) => {
-    const { nombre, apellido,correo_electronico, contrasena } = req.body;
+    const { nombre, apellido,correo_electronico, contrasena, id_tipo_usuario} = req.body;
       if (!nombre || !correo_electronico || !contrasena ) {
       return res.status(400).json({ error: 'Faltan parámetros necesarios' });
     }
@@ -45,7 +45,7 @@ const register = async (req, res) => {
         return res.status(400).json({ error: 'El correo electrónico ya está en uso' });
       }
         const hashedPassword = await bcrypt.hash(contrasena, 8);
-      const result = await Usuario.create(nombre, apellido, correo_electronico, hashedPassword);
+      const result = await Usuario.create(nombre, apellido, correo_electronico, hashedPassword,id_tipo_usuario);
       res.status(201).json({ message:"REGISTRO EXISTOSO ID: " + result.insertId });
     } catch (error) {
       console.error('Error al registrar:', error);

@@ -151,6 +151,7 @@ const deleteProductoById = async (req, res) => {
 
 const updateALLIMG = async (req, res) => {
   const productos = req.body;
+  console.log(productos);
   if (!productos) {
     return res.status(400).json({ error: 'No se proporcionaron productos' });
   } else {

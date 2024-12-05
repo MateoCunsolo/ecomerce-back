@@ -15,9 +15,9 @@ const Usuario = {
     return bcrypt.compare(inputPassword, storedPassword);
   },
 
-  create: async (nombre, apellido, correo_electronico, contrasena) => {
-    const query = 'INSERT INTO USUARIO (nombre, apellido, correo_electronico, contrasena) VALUES (?, ?, ?, ?)';
-    const [result] = await db.query(query, [nombre, apellido, correo_electronico, contrasena]);
+  create: async (nombre, apellido, correo_electronico, contrasena,id_tipo_usuario) => {
+    const query = 'INSERT INTO USUARIO (nombre, apellido, correo_electronico, contrasena, id_tipo_usuario) VALUES (?, ?, ?, ?, ?)';
+    const [result] = await db.query(query, [nombre, apellido, correo_electronico, contrasena, id_tipo_usuario]);
     return result;
   },
 
