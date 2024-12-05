@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const categoriasRoutes = require('./routes/categoriaRoutes'); 
 const tipoUsuarioRoutes = require('./routes/tipoUsuarioRoutes');
 const compraRoutes = require('./routes/compraRoutes');
+const usuarioRoutes = require('./routes/usuarioRoutes');
 const swaggerUi = require('swagger-ui-express');
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/tipos-usuarios', tipoUsuarioRoutes);
 app.use('/categorias', categoriasRoutes);
 app.use('/compra', compraRoutes);
 app.use('/auth', authRoutes);
+app.use('/usuario', usuarioRoutes);
 
 // Ruta no encontrada
 app.use((req, res, next) => { 
